@@ -38,6 +38,7 @@ class TestPurchasePlaces:
             }
         )
         assert response.status_code == 200
+        assert server.clubs[0]['points'] == 15-6
     
     def test_purchase_places_over_12_error(self, client, mocker):
         # try to purchase more than 12 places must return 403 
