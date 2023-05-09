@@ -33,7 +33,7 @@ def index():
 def showSummary():
     club = [club for club in clubs if club['email'] == request.form['email']]
     if club:
-        return render_template('welcome.html',club=club,competitions=competitions)
+        return render_template('welcome.html',club=club[0],competitions=competitions)
     return redirect(url_for('index') + '?failmessage=Sorry, that email wasn\'t found')
 
 
