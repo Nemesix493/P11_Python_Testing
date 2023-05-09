@@ -13,7 +13,7 @@ class TestPurchasePlaces:
             [
                 {
                     "name": "TestCompetition",
-                    "date": "2023-10-22 13:30:00",
+                    "date": f"{datetime.date.today().year + 1}-10-22 13:30:00",
                     "numberOfPlaces": "15"
                 }
             ]
@@ -48,7 +48,7 @@ class TestPurchasePlaces:
             [
                 {
                     "name": "TestCompetition",
-                    "date": "2023-10-22 13:30:00",
+                    "date": f"{datetime.date.today().year + 1}-10-22 13:30:00",
                     "numberOfPlaces": "15"
                 }
             ]
@@ -82,7 +82,7 @@ class TestPurchasePlaces:
             [
                 {
                     "name": "TestCompetition",
-                    "date": "2023-10-22 13:30:00",
+                    "date": f"{datetime.date.today().year + 1}-10-22 13:30:00",
                     "numberOfPlaces": "15"
                 }
             ]
@@ -116,7 +116,7 @@ class TestPurchasePlaces:
             [
                 {
                     "name": "TestCompetition",
-                    "date": "2023-10-22 13:30:00",
+                    "date": f"{datetime.date.today().year + 1}-10-22 13:30:00",
                     "numberOfPlaces": "6"
                 }
             ]
@@ -150,7 +150,7 @@ class TestPurchasePlaces:
             [
                 {
                     "name": "TestCompetition",
-                    "date": "2022-10-22 13:30:00",
+                    "date": f"{datetime.date.today().year - 1}-10-22 13:30:00",
                     "numberOfPlaces": "15"
                 }
             ]
@@ -184,7 +184,7 @@ class TestPurchasePlaces:
             [
                 {
                     "name": "TestCompetition",
-                    "date": f"{datetime.date.year + 1}-10-22 13:30:00",
+                    "date": f"{datetime.date.today().year + 1}-10-22 13:30:00",
                     "numberOfPlaces": "15"
                 }
             ]
