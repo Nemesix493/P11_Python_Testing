@@ -1,4 +1,4 @@
-import pytest
+import pytest, datetime
 
 from .client import client
 import server
@@ -172,6 +172,40 @@ class TestPurchasePlaces:
                 'club': "Test name",
                 'competition': "TestCompetition",
                 'places': 6
+            }
+        )
+        assert response.status_code == 403
+
+    def test_purchase_places_with_wrong_value_error(self, client, mocker):
+        # try to purchase places wrong value must return 403 
+        mocker.patch.object(
+            server,
+            'competitions', 
+            [
+                {
+                    "name": "TestCompetition",
+                    "date": f"{datetime.date.year + 1}-10-22 13:30:00",
+                    "numberOfPlaces": "15"
+                }
+            ]
+        )
+        mocker.patch.object(
+            server,
+            'clubs', 
+            [
+                {
+                    "name":"Test name",
+                    "email":"test@mail.com",
+                    "points":"15"
+                },
+            ]
+        )
+        response = client.post(
+            purchase_link,
+            data={
+                'club': "Test name",
+                'competition': "TestCompetition",
+                'places': "wrong value"
             }
         )
         assert response.status_code == 403
