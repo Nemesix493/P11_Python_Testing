@@ -1,7 +1,8 @@
-import json
+import json, datetime
 
 from flask import Flask, render_template, request, redirect, flash, url_for
 
+from utils import string_to_datetime
 
 def loadClubs():
     with open('clubs.json') as c:
@@ -42,7 +43,8 @@ def book(competition, club):
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
     if foundClub and foundCompetition:
-        return render_template('booking.html',club=foundClub,competition=foundCompetition)
+        places_maximum = min([12, int(foundCompetition['numberOfPlaces']), int(foundClub['points'])])
+        return render_template('booking.html',club=foundClub,competition=foundCompetition, places_maximum=places_maximum)
     else:
         flash("Something went wrong-please try again")
         return render_template('welcome.html', club=club, competitions=competitions)
@@ -52,9 +54,30 @@ def book(competition, club):
 def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
-    placesRequired = int(request.form['places'])
+    places_maximum = min([12, int(competition['numberOfPlaces']), int(club['points'])])
+    try:
+        placesRequired = int(request.form['places'])
+    except:
+        if request.form.get('places') == '' or request.form.get('places') == None:
+            placesRequired = 0
+        else:
+            flash(f'({request.form.get("places")}) is not an allowed value !')
+            return render_template('booking.html', club=club, competition=competition, places_maximum=places_maximum), 403
+    if placesRequired > 12:
+        flash('You can\'t book more than 12 places !')
+        return render_template('booking.html', club=club, competition=competition, places_maximum=places_maximum), 403
+    elif placesRequired > int(competition['numberOfPlaces']):
+        flash(f'You can\'t book more than the total of available places ({competition["numberOfPlaces"]}) !')
+        return render_template('booking.html', club=club, competition=competition, places_maximum=places_maximum), 403
+    elif placesRequired > int(club['points']):
+        flash(f'You can\'t book more than your total of points ({club["points"]}) !')
+        return render_template('booking.html', club=club, competition=competition, places_maximum=places_maximum), 403
+    elif string_to_datetime(competition['date']) < datetime.datetime.now():
+        flash(f'You can\'t book on a past competition !')
+        return render_template('booking.html', club=club, competition=competition, places_maximum=places_maximum), 403
+    club['points'] = int(club['points'])-placesRequired
     competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
-    flash('Great-booking complete!')
+    flash(f'Great-booking complete ({placesRequired} booked) !')
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
