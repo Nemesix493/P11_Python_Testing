@@ -26,8 +26,8 @@ clubs = loadClubs()
 def index():
     failmessage = request.args.get('failmessage')
     if failmessage:
-        return render_template('index.html', failmessage=failmessage)
-    return render_template('index.html', failmessage=None)
+        return render_template('index.html', failmessage=failmessage, clubs=clubs)
+    return render_template('index.html', failmessage=None, clubs=clubs)
 
 
 @app.route('/showSummary', methods=['POST'])
