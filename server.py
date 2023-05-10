@@ -43,19 +43,18 @@ def showSummary():
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
-    foundClub = [c for c in clubs if c['name'] == club][0]
-    foundCompetition = [c for c in competitions if c['name'] == competition][0]
+    foundClub = [c for c in clubs if c['name'] == club]
+    foundCompetition = [c for c in competitions if c['name'] == competition]
     if foundClub and foundCompetition:
-        places_maximum = min([12, int(foundCompetition['numberOfPlaces']), int(foundClub['points'])])
+        places_maximum = min([12, int(foundCompetition[0]['numberOfPlaces']), int(foundClub[0]['points'])])
         return render_template(
             'booking.html',
-            club=foundClub,
-            competition=foundCompetition,
+            club=foundClub[0],
+            competition=foundCompetition[0],
             places_maximum=places_maximum
         )
     else:
-        flash("Something went wrong-please try again")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return redirect(url_for('index') + '?failmessage=Something went wrong-please try again')
 
 
 @app.route('/purchasePlaces', methods=['POST'])
