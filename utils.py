@@ -7,7 +7,7 @@ def string_to_datetime(string: str) -> datetime.datetime:
     time = date_time[1].split(':')
     return datetime.datetime(
         *[
-            *[ int(value) for value in date],
-            *[ int(value) for value in time]
+            *[int(value) for value in date],
+            *[int(value) for value in time]
         ]
     )

@@ -1,15 +1,17 @@
-import pytest, datetime
+import pytest
+import datetime
 
 from .client import client
 import server
 
 purchase_link = '/purchasePlaces'
 
+
 class TestPurchasePlaces:
     def test_purchase_places_success(self, client, mocker):
         mocker.patch.object(
             server,
-            'competitions', 
+            'competitions',
             [
                 {
                     "name": "TestCompetition",
@@ -20,12 +22,12 @@ class TestPurchasePlaces:
         )
         mocker.patch.object(
             server,
-            'clubs', 
+            'clubs',
             [
                 {
-                    "name":"Test name",
-                    "email":"test@mail.com",
-                    "points":"15"
+                    "name": "Test name",
+                    "email": "test@mail.com",
+                    "points": "15"
                 },
             ]
         )
@@ -39,12 +41,12 @@ class TestPurchasePlaces:
         )
         assert response.status_code == 200
         assert server.clubs[0]['points'] == 15-6
-    
+
     def test_purchase_places_over_12_error(self, client, mocker):
-        # try to purchase more than 12 places must return 403 
+        # try to purchase more than 12 places must return 403
         mocker.patch.object(
             server,
-            'competitions', 
+            'competitions',
             [
                 {
                     "name": "TestCompetition",
@@ -55,12 +57,12 @@ class TestPurchasePlaces:
         )
         mocker.patch.object(
             server,
-            'clubs', 
+            'clubs',
             [
                 {
-                    "name":"Test name",
-                    "email":"test@mail.com",
-                    "points":"15"
+                    "name": "Test name",
+                    "email": "test@mail.com",
+                    "points": "15"
                 },
             ]
         )
@@ -75,10 +77,10 @@ class TestPurchasePlaces:
         assert response.status_code == 403
 
     def test_purchase_places_over_club_allowed_error(self, client, mocker):
-        # try to purchase more than the club allowed point must return 403 
+        # try to purchase more than the club allowed point must return 403
         mocker.patch.object(
             server,
-            'competitions', 
+            'competitions',
             [
                 {
                     "name": "TestCompetition",
@@ -89,12 +91,12 @@ class TestPurchasePlaces:
         )
         mocker.patch.object(
             server,
-            'clubs', 
+            'clubs',
             [
                 {
-                    "name":"Test name",
-                    "email":"test@mail.com",
-                    "points":"6"
+                    "name": "Test name",
+                    "email": "test@mail.com",
+                    "points": "6"
                 },
             ]
         )
@@ -109,10 +111,10 @@ class TestPurchasePlaces:
         assert response.status_code == 403
 
     def test_purchase_places_over_competition_allowed_error(self, client, mocker):
-        # try to purchase more than the competition places must return 403 
+        # try to purchase more than the competition places must return 403
         mocker.patch.object(
             server,
-            'competitions', 
+            'competitions',
             [
                 {
                     "name": "TestCompetition",
@@ -123,12 +125,12 @@ class TestPurchasePlaces:
         )
         mocker.patch.object(
             server,
-            'clubs', 
+            'clubs',
             [
                 {
-                    "name":"Test name",
-                    "email":"test@mail.com",
-                    "points":"15"
+                    "name": "Test name",
+                    "email": "test@mail.com",
+                    "points": "15"
                 },
             ]
         )
@@ -141,12 +143,12 @@ class TestPurchasePlaces:
             }
         )
         assert response.status_code == 403
-    
+
     def test_purchase_places_past_competition_error(self, client, mocker):
-        # try to purchase places on a competition passed must return 403 
+        # try to purchase places on a competition passed must return 403
         mocker.patch.object(
             server,
-            'competitions', 
+            'competitions',
             [
                 {
                     "name": "TestCompetition",
@@ -157,12 +159,12 @@ class TestPurchasePlaces:
         )
         mocker.patch.object(
             server,
-            'clubs', 
+            'clubs',
             [
                 {
-                    "name":"Test name",
-                    "email":"test@mail.com",
-                    "points":"15"
+                    "name": "Test name",
+                    "email": "test@mail.com",
+                    "points": "15"
                 },
             ]
         )
@@ -177,10 +179,10 @@ class TestPurchasePlaces:
         assert response.status_code == 403
 
     def test_purchase_places_with_wrong_value_error(self, client, mocker):
-        # try to purchase places wrong value must return 403 
+        # try to purchase places wrong value must return 403
         mocker.patch.object(
             server,
-            'competitions', 
+            'competitions',
             [
                 {
                     "name": "TestCompetition",
@@ -191,12 +193,12 @@ class TestPurchasePlaces:
         )
         mocker.patch.object(
             server,
-            'clubs', 
+            'clubs',
             [
                 {
-                    "name":"Test name",
-                    "email":"test@mail.com",
-                    "points":"15"
+                    "name": "Test name",
+                    "email": "test@mail.com",
+                    "points": "15"
                 },
             ]
         )

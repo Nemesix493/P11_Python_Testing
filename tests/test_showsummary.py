@@ -3,16 +3,17 @@ import pytest
 from .client import client
 import server
 
+
 class TestShowSummary:
     def test_showSummary_error(self, client, mocker):
         mocker.patch.object(
             server,
-            'clubs', 
+            'clubs',
             [
                 {
-                    "name":"Test name",
-                    "email":"test@mail.com",
-                    "points":"15"
+                    "name": "Test name",
+                    "email": "test@mail.com",
+                    "points": "15"
                 },
             ]
         )
@@ -23,16 +24,16 @@ class TestShowSummary:
             }
         )
         assert response.status_code == 302
-    
+
     def test_showSummary_success(self, client, mocker):
         mocker.patch.object(
             server,
-            'clubs', 
+            'clubs',
             [
                 {
-                    "name":"Test name",
-                    "email":"test@mail.com",
-                    "points":"15"
+                    "name": "Test name",
+                    "email": "test@mail.com",
+                    "points": "15"
                 },
             ]
         )
