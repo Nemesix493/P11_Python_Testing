@@ -29,8 +29,8 @@ clubs = loadClubs()
 def index():
     failmessage = request.args.get('failmessage')
     if failmessage:
-        return render_template('index.html', failmessage=failmessage, clubs=clubs)
-    return render_template('index.html', failmessage=None, clubs=clubs)
+        return render_template('index.html', failmessage=failmessage)
+    return render_template('index.html', failmessage=None)
 
 
 @app.route('/showSummary', methods=['POST'])
@@ -92,7 +92,9 @@ def purchasePlaces():
     return render_template('welcome.html', club=club, competitions=competitions)
 
 
-# TODO: Add route for points display
+@app.route('/clubs-points')
+def clubs_points():
+    return render_template('club_point.html', clubs=clubs)
 
 
 @app.route('/logout')
