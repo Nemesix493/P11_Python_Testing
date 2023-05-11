@@ -59,8 +59,12 @@ def book(competition, club):
 
 @app.route('/purchasePlaces', methods=['POST'])
 def purchasePlaces():
-    competition = [c for c in competitions if c['name'] == request.form['competition']][0]
-    club = [c for c in clubs if c['name'] == request.form['club']][0]
+    competition = [c for c in competitions if c['name'] == request.form['competition']]
+    club = [c for c in clubs if c['name'] == request.form['club']]
+    if not (club and competition):
+        return redirect(url_for('index') + '?failmessage=Something went wrong-please try again')
+    club = club[0]
+    competition = competition[0]
     places_maximum = min([12, int(competition['numberOfPlaces']), int(club['points'])])
     try:
         placesRequired = int(request.form['places'])
