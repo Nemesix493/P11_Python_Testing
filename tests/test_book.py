@@ -35,7 +35,7 @@ class TestPurchasePlaces:
         assert response.status_code == 200
 
     def test_book_unexist_competition_error(self, client, mocker):
-        # try to load book view on unexist competition should return 403
+        # try to load book view on unexist competition should return 302
         mocker.patch.object(
             server,
             'competitions',
@@ -62,7 +62,7 @@ class TestPurchasePlaces:
         assert response.status_code == 302
 
     def test_book_unexist_club_error(self, client, mocker):
-        # try to load book view on unexist club should return 403
+        # try to load book view on unexist club should return 302
         mocker.patch.object(
             server,
             'competitions',
