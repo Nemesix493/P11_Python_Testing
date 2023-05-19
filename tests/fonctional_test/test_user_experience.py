@@ -7,7 +7,7 @@ from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions
 
-from .run_server import start_server, stop_server, clubs, competitions
+from ..run_test_server import start_server, stop_server, clubs, competitions
 
 
 class TestUserExperience:
