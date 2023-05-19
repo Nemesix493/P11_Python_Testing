@@ -5,3 +5,5 @@ lib
 .envrc
 __pycache__
 /env/
+/flake-html/
+geckodriver.log
