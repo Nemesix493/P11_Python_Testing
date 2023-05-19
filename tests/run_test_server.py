@@ -35,7 +35,3 @@ def start_server():
 def stop_server():
     flask_process.terminate()
     flask_process.join()
-
-
-if __name__ == "__main__":
-    run_flask_server()
