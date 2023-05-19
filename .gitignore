@@ -6,4 +6,6 @@ lib
 __pycache__
 /env/
 /flake-html/
+/htmlcov/
+.coverage
 geckodriver.log
