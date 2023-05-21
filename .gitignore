@@ -9,3 +9,5 @@ __pycache__
 /htmlcov/
 .coverage
 geckodriver.log
+clubs_test.json
+competitions_test.json

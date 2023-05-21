@@ -21,6 +21,7 @@ competitions = [
 
 
 def run_flask_server():
+    server.is_test_server = True
     server.clubs = clubs
     server.competitions = competitions
     server.app.run()

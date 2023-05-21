@@ -5,6 +5,8 @@ from flask import Flask, render_template, request, redirect, flash, url_for
 
 from utils import string_to_datetime
 
+is_test_server = False
+
 
 def loadClubs():
     with open('clubs.json') as c:
@@ -23,6 +25,33 @@ app.secret_key = 'something_special'
 
 competitions = loadCompetitions()
 clubs = loadClubs()
+
+
+def saveClubs():
+    if not app.config['TESTING']:
+        file_path = 'clubs.json'
+        if is_test_server:
+            file_path = 'clubs_test.json'
+        with open(file_path, 'w') as c:
+            json.dump({'clubs': clubs}, c)
+
+
+def saveCompetitions():
+    if not app.config['TESTING']:
+        file_path = 'competitions.json'
+        if is_test_server:
+            file_path = 'competitions_test.json'
+        with open(file_path, 'w') as c:
+            json.dump({'competitions': competitions}, c)
+
+
+def modify_data(func):
+    def decorate_func(*args, **kwargs):
+        return_value = func(*args, **kwargs)
+        saveClubs()
+        saveCompetitions()
+        return return_value
+    return decorate_func
 
 
 @app.route('/')
@@ -58,6 +87,7 @@ def book(competition, club):
 
 
 @app.route('/purchasePlaces', methods=['POST'])
+@modify_data
 def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']]
     club = [c for c in clubs if c['name'] == request.form['club']]
